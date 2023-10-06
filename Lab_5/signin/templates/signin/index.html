@@ -1,0 +1,11 @@
+{% extends "signin/layout.html" %} {% block body %}
+<h1>Users</h1>
+<ul>
+  {% for user in users %}
+  <li>{{ user }}</li>
+  {% endfor %}
+</ul>
+<div>
+  <a href="{% url 'signin:add' %}">Adding a new user</a>
+</div>
+{% endblock %}
