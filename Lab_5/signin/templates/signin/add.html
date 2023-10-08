@@ -1,8 +1,11 @@
 {% extends "signin/layout.html" %} {% block body %}
 <h1>Add Users:</h1>
-<form action="">
-  {% csrf_token %} {{ form }}
-  <input type="submit" />
+<form action="{% url 'signin:add' %}" method="post">
+  {% csrf_token %}
+  <div class="container">{{ form }}</div>
+  <div>
+    <input type="submit" />
+  </div>
 </form>
 <div>
   <a href="{% url 'signin:index' %}">View Users</a>
