@@ -10,11 +10,17 @@ class LoginForm(forms.Form):
     password = forms.CharField(
         label='password', widget=forms.PasswordInput(render_value=True))
 
+class Person():
+    def __init__(self,username,password):
+        self.username = username
+        self.password = password
+
 
 def index(request):
     if "users" not in request.session:
         request.session["users"] = []
-    return render(request, "signin/index.html", {"users": request.session["users"]})
+    users = request.session["users"]
+    return render(request, "signin/index.html", {"users": users})
 
 
 def add(request):
@@ -22,8 +28,10 @@ def add(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            user = form.cleaned_data["username"]
-            request.session["users"] += [user]
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            person = Person(username=username,password=password)
+            request.session["users"].append(person)
             return HttpResponseRedirect(reverse("signin:index"))
         else:
             return render(request, "signin/add.html", {'form': form})
