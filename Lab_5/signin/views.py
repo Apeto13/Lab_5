@@ -31,7 +31,7 @@ def add(request):
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
             person = Person(username=username,password=password)
-            request.session["users"].append(person.username)
+            request.session["users"] += [person.username]
             return HttpResponseRedirect(reverse("signin:index"))
         else:
             return render(request, "signin/add.html", {'form': form})
